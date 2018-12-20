@@ -1,6 +1,8 @@
 // Imports
+import { Telegraf } from 'telegraf'
 import { ContextMessageUpdate } from 'telegraf'
 import { report } from '../helpers/reporter'
+import { findMessage } from '../models/Message'
 
 export async function checkIfYouTube(ctx: ContextMessageUpdate, next) {
   try {
@@ -18,4 +20,19 @@ export async function checkIfYouTube(ctx: ContextMessageUpdate, next) {
   } catch (err) {
     await report(ctx.telegram, err)
   }
+}
+
+export async function addEditCheck(bot: Telegraf<ContextMessageUpdate>) {
+  bot.on('edited_message', async ctx => {
+    try {
+      await ctx.deleteMessage()
+      const voteMessage = (await findMessage(
+        ctx.message.message_id,
+        ctx.chat.id
+      )).voteMessageId
+      await ctx.telegram.deleteMessage(ctx.chat.id, voteMessage)
+    } catch (err) {
+      report(ctx.telegram, err)
+    }
+  })
 }

@@ -5,11 +5,13 @@ dotenv.config({ path: `${__dirname}/../.env` })
 // Imports
 import { bot } from './helpers/bot'
 import { attachChat } from './middleware/attachChat'
-import { checkIfYouTube } from './middleware/checkIfYouTube'
+import { checkIfYouTube, addEditCheck } from './middleware/checkIfYouTube'
 import { setupYouTubeLinks, setupVoteAction } from './helpers/youtube'
 
 // Check if vote
 setupVoteAction(bot)
+// Adding edit check
+addEditCheck(bot)
 // Check if YouTube link
 bot.use(checkIfYouTube)
 // Attach chat to the ctx
