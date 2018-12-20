@@ -27,7 +27,7 @@ export async function addEditCheck(bot: Telegraf<ContextMessageUpdate>) {
     try {
       await ctx.deleteMessage()
       const voteMessage = (await findMessage(
-        ctx.message.message_id,
+        ctx.editedMessage.message_id,
         ctx.chat.id
       )).voteMessageId
       await ctx.telegram.deleteMessage(ctx.chat.id, voteMessage)

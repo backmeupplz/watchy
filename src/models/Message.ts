@@ -3,7 +3,7 @@ import { prop, Typegoose, arrayProp } from 'typegoose'
 import * as Telegram from 'telegram-typings'
 
 export class Message extends Typegoose {
-  @prop({ required: true, index: true, unique: true })
+  @prop({ required: true, index: true })
   id: number
   @prop({ required: true, index: true })
   chatId: number
