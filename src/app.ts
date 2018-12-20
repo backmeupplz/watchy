@@ -8,3 +8,5 @@ import { bot } from './helpers/bot'
 bot.on('message', ctx => {
   ctx.reply('Ну привет-привет!')
 })
+
+bot.startPolling()
