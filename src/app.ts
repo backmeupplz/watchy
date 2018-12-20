@@ -7,10 +7,7 @@ import { bot } from './helpers/bot'
 import { attachChat } from './middleware/attachChat'
 import { checkIfYouTube } from './middleware/checkIfYouTube'
 import { setupYouTubeLinks, setupVoteAction } from './helpers/youtube'
-import { checkTime } from './middleware/checkTime'
 
-// Don't process old updates
-bot.use(checkTime)
 // Check if vote
 setupVoteAction(bot)
 // Check if YouTube link
