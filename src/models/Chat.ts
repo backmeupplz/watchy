@@ -1,9 +1,16 @@
 // Imports
 import { prop, Typegoose } from 'typegoose'
 
+export enum Mode {
+  YouTube = 'youtube',
+  Pictures = 'pictures',
+}
+
 export class Chat extends Typegoose {
   @prop({ required: true, index: true, unique: true })
   id: number
+  @prop({ required: true, enum: Mode, default: Mode.YouTube })
+  mode: Mode
 }
 
 // Get Chat model

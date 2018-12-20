@@ -3,16 +3,30 @@ import { Telegraf } from 'telegraf'
 import { ContextMessageUpdate } from 'telegraf'
 import { report } from '../helpers/reporter'
 import { findMessage } from '../models/Message'
+import { Mode } from '../models'
 
-export async function checkIfYouTube(ctx: ContextMessageUpdate, next) {
+export async function checkIfNeedsDelete(ctx: ContextMessageUpdate, next) {
   try {
-    if (
-      ctx.message &&
-      ctx.message.text &&
-      /^((?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\-_]+))$/.test(
-        ctx.message.text
-      )
-    ) {
+    let isValid = false
+    if (ctx.dbchat.mode === Mode.Pictures) {
+      if (
+        ctx.message &&
+        (ctx.message.animation || (ctx.message.photo && !ctx.message.caption))
+      ) {
+        isValid = true
+      }
+    } else {
+      if (
+        ctx.message &&
+        ctx.message.text &&
+        /^((?:https?:\/\/)?(?:youtu\.be\/|(?:www\.|m\.)?youtube\.com\/(?:watch|v|embed)(?:\.php)?(?:\?.*v=|\/))([a-zA-Z0-9\-_]+))$/.test(
+          ctx.message.text
+        )
+      ) {
+        isValid = true
+      }
+    }
+    if (isValid) {
       next()
     } else {
       await ctx.deleteMessage()
