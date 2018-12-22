@@ -4,6 +4,7 @@ import { ContextMessageUpdate } from 'telegraf'
 import { report } from '../helpers/reporter'
 import { findMessage } from '../models/Message'
 import { Mode } from '../models'
+import * as request from 'async-request'
 
 export async function checkIfNeedsDelete(ctx: ContextMessageUpdate, next) {
   try {
@@ -23,7 +24,14 @@ export async function checkIfNeedsDelete(ctx: ContextMessageUpdate, next) {
           ctx.message.text
         )
       ) {
-        isValid = true
+        try {
+          const response = await request(ctx.message.text)
+          if (response.body.indexOf('This video does not exist') < 0) {
+            isValid = true
+          }
+        } catch (err) {
+          // Do nothing, not valid
+        }
       }
     }
     if (isValid) {
