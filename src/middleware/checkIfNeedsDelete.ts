@@ -26,7 +26,11 @@ export async function checkIfNeedsDelete(ctx: ContextMessageUpdate, next) {
       ) {
         try {
           const response = await request(ctx.message.text)
-          if (response.body.indexOf('unavailable-submessage') < 0) {
+          if (
+            response.body.indexOf(
+              '<h1 id="unavailable-message" class="message">'
+            ) < 0
+          ) {
             isValid = true
           }
         } catch (err) {
