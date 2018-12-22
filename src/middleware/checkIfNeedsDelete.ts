@@ -26,6 +26,7 @@ export async function checkIfNeedsDelete(ctx: ContextMessageUpdate, next) {
       ) {
         try {
           const response = await request(ctx.message.text)
+          console.log(response.body)
           if (response.body.indexOf('This video does not exist') < 0) {
             isValid = true
           }
