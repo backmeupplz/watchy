@@ -18,7 +18,7 @@
     "@types/node": "^10.12.18",
     "async-request": "^1.2.0",
     "dotenv": "^6.2.0",
-    "mongoose": "^5.4.0",
+    "mongoose": "^5.7.5",
     "semaphore-async-await": "^1.5.1",
     "telegraf": "^3.25.5",
     "typegoose": "^5.4.1",
